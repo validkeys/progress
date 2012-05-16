@@ -23,7 +23,7 @@
 	
 	<?php foreach ($roadmaps as $roadmap): ?>
 		<div class="roadmap" id="roadmap-<?php echo $roadmap['Roadmap']['id'] ?>">
-
+			
 			<h2><?php echo $roadmap['Roadmap']['title'] ?>
 				<?php echo $html->link('Add Milestone',array(
 					'controller'	=> 'milestones',
@@ -40,9 +40,12 @@
 				<?php echo (empty($roadmap['Milestone'])) ? $html->tag('div','',array('class'	=> 'empty-roadmap')) : '' ?>
 			<?php foreach ($roadmap['Milestone'] as $milestone): ?>
 				<div class="milestone progress-<?php echo $milestone['id'] ?>" style="width:<?php echo ((100 / count($roadmap['Milestone']) - 1) / 100) * 830 ?>px;" id="milestone-<?php echo $milestone['id'] ?>">
+					
 					<div class="progressbar progress-<?php echo $milestone['id'] ?>">
 						</div>
-					<h3 class="title"><?php echo $milestone['title'] ?></h3>
+					<h3 class="title"><?php echo $milestone['title'] ?>
+						<a href="#" class="magnify" rel="milestone-<?php echo $milestone['id'] ?>">+</a>
+						</h3>
 					
 					<?php foreach ($milestone['Step'] as $step): ?>
 						<div id="step-<?php echo $step['id'] ?>" class="step <?php echo ($step['complete']) ? "complete" : "" ?>">

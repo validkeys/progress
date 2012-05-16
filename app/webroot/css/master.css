@@ -233,3 +233,58 @@ a.roadmap-add{
 a.roadmap-add:hover{
 		background: #498B18;
 }
+
+div.lightbox{
+	width: 500px !important;
+	position: absolute;
+	height: 700px !important;
+	top: 50px;
+	left: 50%;
+	margin-left: -250px !important;
+	z-index: 999;
+}
+
+div.lightboxbg{
+	background: url(../img/ui-bg_diagonals-thick_15_444444_40x40.png);
+	z-index: 995;
+	top: 0;
+	left: 0;
+	position: absolute;
+	opacity: 0.6;
+}
+
+div.lightbox.milestone{
+	-webkit-box-shadow: #ffffff 10px !important;
+    -moz-box-shadow: #ffffff 10px 10px 10px !important;
+    box-shadow: #575757 5px 5px 5px!important;
+	-webkit-border-radius: 12px !important;
+	-moz-border-radius: 12px !important;
+	border-radius: 12px !important;	
+}
+
+div.lightbox.milestone div.step label{
+	font-size: 14pt !important;
+}
+
+div.lightbox.milestone h3{
+	font-weight: bold;
+}
+
+a.close-window{
+	display:block;
+	float: right;
+	height: 28px;
+	width: 28px;
+	background: url(../img/apple-close.png) no-repeat;
+	margin-right: -30px;
+	margin-top: -20px;
+}
+
+a.magnify{
+	display: block;
+	float: right;
+	background: url(../img/magnify.png) no-repeat;
+	width: 26px;
+	height: 26px;
+	font-size: 0pt;
+}
