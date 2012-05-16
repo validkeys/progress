@@ -69,7 +69,7 @@ div.roadmap div.milestone{
 
 div.roadmap div.milestone div.step{
 	padding: 5px 2px;
-	border-bottom: #f2f2f2 1px solid;
+	border-bottom: #feebfa 1px solid;
 	margin: 2px 0;
 }
 
@@ -86,8 +86,10 @@ h3.title{
 }
 
 div.step.complete{
-	background: #588F27;
-	color: #fff;
+	color: #588F27;
+	background: #eaf9ec;
+	text-decoration: line-through;
+/*	color: #fff;*/
 /*	border: #A9CF54 1px solid !important;*/
 }
 
@@ -120,14 +122,18 @@ a.save-link{
 	padding: 10px 10px;
 	display: block !important;
 	width: 120px;
-	background: #59AEFF;
-	color: #fff !important;
+	background: #eaf9ec;
+	color: #30b53f !important;
 	font-family: "Helvetica Neue", Helvetica, Arial !important;
 	font-size: 18pt;
 	text-decoration: none;
 	font-weight: 100 !important;ign: center;
 	text-align: center;
-	margin: 0 auto;
+	margin: 10px auto;
+	-webkit-border-radius: 12px;
+	-moz-border-radius: 12px;
+	border-radius: 12px;
+	
 }
 a.save-link:hover{
 	background: #ED9C1A;

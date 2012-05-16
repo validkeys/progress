@@ -108,7 +108,7 @@ function add_milestones(el){
 	var url = $(el).attr('href');
 	$('#dialog-modal-milestone').find('a#new-milestone-save').unbind('click');
 	$('#dialog-modal-milestone').find('a#new-milestone-save').click(function(){
-		
+		event.preventDefault();
 		$.ajax({
 		  type: 'POST',
 		  url: url+'.json',
