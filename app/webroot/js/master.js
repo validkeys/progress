@@ -86,7 +86,9 @@ function add_steps(el){
 				$(div).append(input);
 				$(div).append(label);
 				$(div).insertBefore('div#milestone-'+data.notes.Step.milestone_id+' a.add-step').fadeIn(1000).delay(100).effect('highlight',{},3000);
-				console.log('div#milestone-'+data.notes.Step.milestone_id+' a.add-step');
+				// console.log('div#milestone-'+data.notes.Step.milestone_id+' a.add-step');
+				
+				update_progress_bar();
 				
 				
 			}else{

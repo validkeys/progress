@@ -129,3 +129,20 @@ a.add-milestone{
 	color: #588F27;
 
 }
+
+a.delete-milestone{
+	display: block;
+	font-size: 10pt !important;
+	color: #CC0000;
+	text-decoration: none;
+}
+
+a.add-step{
+	display: block !important;
+	color: green;
+	background: url(../img/add.jpg) !important;
+	height: 25px;
+	width: 25px;
+/*	border: #000 1px solid;*/
+	font-size: 0pt;
+}
