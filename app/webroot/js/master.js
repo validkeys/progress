@@ -289,7 +289,7 @@ function delete_roadmap(){
 
 	event.preventDefault();
 	var url = $(this).attr('href');
-	console.log($(this));
+	// console.log($(this));
 	
 	$.ajax({
 	  type: 'POST',
