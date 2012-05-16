@@ -297,3 +297,8 @@ div.logo{
 	background: url(../img/logo.png) no-repeat;
 	position: absolute;
 }
+
+img#beta-logo{
+	position: absolute;
+	right: 40px;
+}

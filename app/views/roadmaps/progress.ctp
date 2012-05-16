@@ -1,5 +1,6 @@
 <?php echo $javascript->link(array('master','jquery.scrollTo-min'), false) ?>
 <div id="content-container" class="cssgradients">
+	<?php echo $html->image('beta.jpeg',array('id'	=> 'beta-logo')) ?>
 	<div class="logo"></div>
 	 <h1 id="main-heading">FastFwd</h1>
 	<div id="dialog-modal" title="Add A Step" style="display: none">
