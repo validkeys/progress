@@ -168,7 +168,7 @@ function add_milestones(el){
 				$(div).append(bottom);
 				$(bottom).append(link);
 				$(bottom).append(h3del);
-				$(bottom).append($('<div class="clear" style="clear:both"></div>'));
+				$(bottom).append($('<div class="clear-bottom" style="clear:both"></div>'));
 				
 				console.log(div);
 				$('div#roadmap-'+data.notes.Milestone.roadmap_id+' div.milestone');
