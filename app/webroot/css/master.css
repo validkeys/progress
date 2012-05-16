@@ -1,0 +1,131 @@
+html{
+	background: #F2F2F2;
+	font-family: "Helvetica Neue",Helvetica,Arial;
+	height: 100%;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+body{
+	height: 100%;
+	width: 100%;	
+	margin: 0;
+	padding: 0;
+}
+
+#content-container{
+	background: #FFF;
+	border: #d1d1d1 8px solid;
+	width: 950px;
+	margin: 0 auto;
+	padding: 10px;
+}
+
+h1{
+	letter-spacing: -1px;
+	color: #CC0000;
+	border-bottom: #575757 1px solid;
+}
+
+div.roadmap{
+	border: #f2f2f2 1px solid;
+	width: 900px;
+	margin: 0 auto;
+	padding: 5px;
+	height: 100%;
+}
+div.roadmap h2{text-align: center;}
+
+div.step label{
+	margin-left: 15px;
+	font-size: 13px;
+	font-weight: 200;
+}
+
+div.roadmap div.milestone{
+	float: left;
+	border-right: #d1d1d1 1px solid;
+	padding: 3px;
+	height: 100$;
+}
+
+div.roadmap div.milestone div.step{
+	padding: 5px 2px;
+	border-bottom: #f2f2f2 1px solid;
+	margin: 2px 0;
+}
+
+h3.title{
+	padding: 5px 0 0 0!important;
+	text-indent: 32px;
+	font-style: italic;
+	background: #f8f8f8;
+/*	text-align: center;*/
+	font-weight: 200;
+	border-bottom: #d1d1d1 1px dotted;
+	font-size: 16pt;
+	margin-top: 2px !important;
+}
+
+div.step.complete{
+	background: #588F27;
+	color: #fff;
+/*	border: #A9CF54 1px solid !important;*/
+}
+
+div.flash-message{
+	z-index: 9999;
+	height: 100%;
+	width: 100%;
+	background: green;
+	position: fixed;
+}
+
+div.flash-message h1{
+	margin: 0;
+	padding: 0;
+	border: 0 !important;
+	color: #FFF !important;
+	text-align: center;
+	margin-top: 250px;
+}
+
+input.add-new-field{
+	font-size: 30pt !important;
+	width: 450px;
+	padding: 5px;
+	font-family: "Helvetica Neue", Helvetica, Arial !important;
+	font-weight: 100 !important;
+}
+
+a.save-link{
+	padding: 10px 10px;
+	display: block !important;
+	width: 120px;
+	background: #59AEFF;
+	color: #fff !important;
+	font-family: "Helvetica Neue", Helvetica, Arial !important;
+	font-size: 18pt;
+	text-decoration: none;
+	font-weight: 100 !important;ign: center;
+	text-align: center;
+	margin: 0 auto;
+}
+a.save-link:hover{
+	background: #ED9C1A;
+}
+
+a.add-milestone{
+	padding: 3px 3px;
+	display: block !important;
+/*	float: right;*/
+/*	margin: 10px 45px;*/
+/*	position: inli;*/
+	font-size: 12pt;
+	font-weight: 200 !important;
+	text-align: center;
+	text-decoration: none;
+	color: #588F27;
+
+}

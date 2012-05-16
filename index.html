@@ -1,0 +1,129 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title>Pressly Progress</title>
+	<link rel="stylesheet" href="css/master.css" type="text/css" media="screen" title="no title" charset="utf-8">
+	<link type="text/css" href="css/ui-lightness/jquery-ui-1.8.20.custom.css" rel="stylesheet" />
+	<script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+	<script type="text/javascript" src="js/jquery-ui-1.8.20.custom.min.js"></script>
+	
+	<script type="text/javascript" charset="utf-8">
+		
+		function update_progress_bar(){
+			$('.roadmap').each(function(){
+				var num_milestones = $('table tr.heading').find('td').each(function(el){
+					// find the class
+					var row_class = $(this).attr('class');
+					
+					// Now find all the cells within the tr.todos with the same class
+					// var search = $(this).parent().parent().parent().find('tr.todos td.'+row_class);
+					var search = $(this).parent().parent().parent().find('tr.todos td.'+row_class);
+					// console.log(search);
+					// Find the total number of items
+					var num_items = search.length;
+					// console.log(num_items);
+					// Find the total number of checked off items
+					var num_items_checked = $(search).find('input[type=checkbox]:checked').length;
+					var progress = 0;
+					
+					if(num_items_checked > 0){
+						progress = num_items_checked / num_items * 100;
+					}
+					// console.log(progress);
+					$("tr.progress td.progressbar."+row_class).progressbar({ value: progress });
+					
+					// console.log(row_class + ": " + num_items_checked);
+				});
+			});
+			
+		}
+	
+		$(document).ready(function() {
+			
+			// Set the classes{
+				$('table').each(function(){
+					var num_milestones = $('table tr.heading').find('td');
+					var num = 1;
+					$(num_milestones).each(function(){
+						$(this).addClass("row"+num);
+						num = num + 1;
+					})
+					
+					var num_todos = $('table tr.todos').find('td');
+					var num = 1;
+					$(num_todos).each(function(){
+						// console.log(num);
+						// console.log(num_milestones);
+						$(this).addClass("row"+num);
+						if(num == num_milestones.length){
+							num = 1;
+						} else {
+							num = num + 1;
+						}
+					});
+
+					var num_todos = $('table tr.progress').find('td');
+					var num = 1;
+					$(num_todos).each(function(){
+						// console.log(num);
+						// console.log(num_milestones);
+						$(this).addClass("row"+num);
+						if(num == num_milestones.length){
+							num = 1;
+						} else {
+							num = num + 1;
+						}
+					});
+				});
+				
+				update_progress_bar();
+				
+				$('input[type=checkbox]').change(update_progress_bar);
+		});
+	</script>
+	
+</head>
+<body>
+	
+	<div id="content-container">
+		 <h1>Pressly Progress</h1>
+		
+		<div class="roadmap">
+			<h2>V2</h2>
+			
+			<table cellpadding="0px" cellspacing="0">
+				<tr class="heading">
+					<td>API</td>
+					<td>Dashboard</td>
+					<td>Site</td>
+					<td>Payments</td>
+				</tr>
+				<tr class="progress">
+					<td class="progressbar"></td>
+					<td class="progressbar"></td>
+					<td class="progressbar"></td>
+					<td class="progressbar"></td>
+				</tr>
+				<tr class="todos">
+					<td><input type="checkbox" name="feeder" checked="true" value="" id="feeder"><label for="feeder">Feeder</label></td>
+					<td><input type="checkbox" name="feeder" value="" id="feeder"><label for="feeder">Feeder</label></td>
+					<td><input type="checkbox" name="feeder" value="" id="feeder"><label for="feeder">Feeder</label></td>
+					<td><input type="checkbox" name="feeder" value="" id="feeder"><label for="feeder">Feeder</label></td>
+				</tr>
+				<tr class="todos">
+					<td><input type="checkbox" name="feeder" checked="true" value="" id="feeder1"><label for="feeder">Feeder</label></td>
+					<td><input type="checkbox" name="feeder" value="" id="feeder"><label for="feeder">Feeder</label></td>
+					<td><input type="checkbox" name="feeder" value="" id="feeder"><label for="feeder">Feeder</label></td>
+					<td><input type="checkbox" name="feeder" value="" id="feeder"><label for="feeder">Feeder</label></td>
+				</tr>
+
+			</table>
+			
+		</div>
+	</div>
+
+</body>
+</html>
