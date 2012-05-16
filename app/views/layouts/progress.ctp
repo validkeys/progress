@@ -8,7 +8,7 @@
 	<?php
 		echo $html->css('master');
 		echo $html->css('ui-lightness/jquery-ui-1.8.20.custom.css');
-		echo $javascript->link(array('jquery-1.7.2.min.js','jquery-ui-1.8.20.custom.min.js'));
+		echo $javascript->link(array('jquery-1.7.2.min.js','jquery-ui-1.8.20.custom.min.js','modernizr'));
 		echo $scripts_for_layout;
 	?>
 </head>

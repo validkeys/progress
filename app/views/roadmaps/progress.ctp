@@ -1,5 +1,5 @@
 <?php echo $javascript->link('master', false) ?>
-<div id="content-container">
+<div id="content-container" class="cssgradients">
 	 <h1>Pressly Progress</h1>
 	<div id="dialog-modal" title="Add A Step" style="display: none">
 		<input type="text" name="data[Step][title]" id="new-step" class="add-new-field" />

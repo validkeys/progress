@@ -85,7 +85,7 @@ function add_steps(el){
 				var label 	= $('<label for="step-'+data.notes.Step.id+'">').text(data.notes.Step.title);
 				$(div).append(input);
 				$(div).append(label);
-				$(div).insertBefore('div#milestone-'+data.notes.Step.milestone_id+' a.add-step').fadeIn(1000).delay(100).effect('highlight',{},3000);
+				$(div).insertBefore('div#milestone-'+data.notes.Step.milestone_id+' a.add-step').delay(500).slideDown(300).delay(100).effect('highlight',{},3000);
 				// console.log('div#milestone-'+data.notes.Step.milestone_id+' a.add-step');
 				
 				update_progress_bar();
@@ -106,8 +106,9 @@ function add_milestones(el){
 	$('#dialog-modal-milestone').dialog('open');
 	
 	var url = $(el).attr('href');
-	
+	$('#dialog-modal-milestone').find('a#new-milestone-save').unbind('click');
 	$('#dialog-modal-milestone').find('a#new-milestone-save').click(function(){
+		
 		$.ajax({
 		  type: 'POST',
 		  url: url+'.json',
@@ -153,8 +154,8 @@ function add_milestones(el){
 }
 
 function set_milestone_width(roadmap_id){
-	// reset the widths
-	var current 	= (100 / $('div#roadmap-'+roadmap_id+' div.milestone').length) - 1;
+	
+	var current 	= (100 / $('div#roadmap-'+roadmap_id+' div.milestone').length) - 2;
 	current = current + "%";
 	$('div#roadmap-'+roadmap_id+' div.milestone').css('width',current);
 }
@@ -210,10 +211,8 @@ function delete_milestone(){
 	},
 	  dataType: 'json'
 	});
-		
-		
-
 }
+
 
 $(document).ready(function() {
 	
