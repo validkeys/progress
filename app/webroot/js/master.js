@@ -296,7 +296,7 @@ function delete_roadmap(){
 	  url: url+'.json',
 	  success: function(data){
 		if(data.status == 'success'){
-			$('div#roadmap-'+data.notes.Roadmap.id).slideUp(1000,function(){
+			$('div#roadmap-'+data.notes.Roadmap.id).slideUp(200,function(){
 				$(this).remove();
 			});
 		}
@@ -334,7 +334,7 @@ function add_roadmap(){
 				});
 				var delLink		= $('<a>').attr('href','roadmaps/delete/'+data.notes.Roadmap.id).addClass('delete-roadmap').text('Delete');
 				$(delLink).click(delete_roadmap);
-				var emptyRoadmap = $('<div>').addClass('empty-roadmap');
+				var emptyRoadmap = $('<div>').addClass('empty-roadmap').css('display','none');
 				var divclear = $('<div>').addClass('clear').css('clear','both');
 				$(h2).append(addLink);
 				$(h2).append(delLink);
@@ -344,6 +344,7 @@ function add_roadmap(){
 				console.log(container);
 				$('#content-container').append(container);
 				$.scrollTo('#roadmap-'+data.notes.Roadmap.id,{duration: 700});
+				$('#roadmap-'+data.notes.Roadmap.id + ' div.empty-roadmap').fadeIn(1500);
 				
 			}else{
 				alert("For some reason, that roadmap could not be saved" + data.notes);
