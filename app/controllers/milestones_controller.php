@@ -133,4 +133,33 @@ class MilestonesController extends AppController {
 			$this->redirect(array('action' => 'index'));			
 		}
 	}
+	
+	function sort(){
+		// $this->log($_POST['milestone'], LOG_DEBUG); die();
+		$status = 'failure';
+		if(!empty($_POST) && isset($_POST['milestone'])){
+			$order = 1;
+			$data = array();
+			foreach ($_POST['milestone'] as $key => $id) {
+					$data[] = array(
+						'id'			=> $id,
+						'sort_order'	=> $order
+					);
+				$order++;
+			}
+			
+			if($this->Milestone->saveAll($data)){
+				$status = 'success';
+			}
+		}else{
+			$this->log('No post data', LOG_DEBUG);
+		}
+		
+		$data = array(
+			'status'	=> $status
+		);
+		
+		$this->set('data', $data);
+		
+	}
 }

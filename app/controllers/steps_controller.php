@@ -73,15 +73,38 @@ class StepsController extends AppController {
 
 	function delete($id = null) {
 		if (!$id) {
-			$this->Session->setFlash(__('Invalid id for step', true));
-			$this->redirect(array('action'=>'index'));
+			if($this->RequestHandler->accepts('json')){
+				$status = 'failure';
+				$notes = 'no id sent';
+			}else{
+				$this->Session->setFlash(__('Invalid id for step', true));
+				$this->redirect(array('action'=>'index'));
+				
+			}
 		}
+		$this->Step->recursive = -1;
+		$step = $this->Step->read(null, $id);
+		
 		if ($this->Step->delete($id)) {
-			$this->Session->setFlash(__('Step deleted', true));
-			$this->redirect(array('action'=>'index'));
+			if($this->RequestHandler->accepts('json')){
+				$status = 'success';
+				$notes = $step;
+			}else{
+				$this->Session->setFlash(__('Step deleted', true));
+				$this->redirect(array('action'=>'index'));				
+			}
+		}else{
+			$status = 'failure';
+			$notes = 'could not delete';
 		}
-		$this->Session->setFlash(__('Step was not deleted', true));
-		$this->redirect(array('action' => 'index'));
+		
+		$this->set('status', $status);
+		$this->set('notes', $notes);
+		
+		if(!$this->RequestHandler->accepts('json')){
+			$this->Session->setFlash(__('Step was not deleted', true));
+			$this->redirect(array('action' => 'index'));			
+		}
 	}
 	
 	function complete(){

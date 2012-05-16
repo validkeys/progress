@@ -75,11 +75,12 @@ div.roadmap div.milestone div.step{
 
 h3.title{
 	padding: 5px 0 0 0!important;
-	text-indent: 32px;
-	font-style: italic;
+/*	text-indent: 32px;*/
+	text-align: center;
+/*	font-style: italic;*/
 	background: #f8f8f8;
 /*	text-align: center;*/
-	font-weight: 200;
+	font-weight: 100;
 	border-bottom: #d1d1d1 1px dotted;
 	font-size: 16pt;
 	margin-top: 2px !important;
@@ -88,10 +89,12 @@ h3.title{
 div.step.complete{
 	color: #588F27;
 	background: #eaf9ec;
-	text-decoration: line-through;
+/*	text-decoration: line-through;*/
 /*	color: #fff;*/
 /*	border: #A9CF54 1px solid !important;*/
 }
+
+div.step.complete label{text-decoration: line-through;}
 
 div.flash-message{
 	z-index: 9999;
@@ -143,8 +146,9 @@ a.add-milestone{
 	padding: 3px 3px;
 	display: block !important;
 /*	float: right;*/
-/*	margin: 10px 45px;*/
+	margin: 0 auto;
 /*	position: inli;*/
+	width: 100px;
 	font-size: 12pt;
 	font-weight: 200 !important;
 	text-align: center;
@@ -155,17 +159,77 @@ a.add-milestone{
 
 a.delete-milestone{
 	display: block;
-	font-size: 10pt !important;
-	color: #CC0000;
-	text-decoration: none;
+	float: right;
+	width: 16px;
+	height: 16px;
+	background: url(../img/icon_trash.gif) no-repeat;
+	font-size: 0pt;
+	border: 0;
+	text-decoration: none !important;
+	margin: 5px 2px 0 0;
 }
 
 a.add-step{
 	display: block !important;
+	float: left;
 	color: green;
 	background: url(../img/add.jpg) !important;
 	height: 25px;
 	width: 25px;
-/*	border: #000 1px solid;*/
+
 	font-size: 0pt;
+}
+
+a.step-delete{
+	display: block;
+	float: right;
+	width: 16px;
+	height: 16px;
+	background: url(../img/icon_trash.gif) no-repeat;
+	font-size: 0pt;
+	border: 0;
+	text-decoration: none !important;
+	
+}
+a.delete-roadmap{
+	display: block;
+	width: 16px;
+	height: 16px;
+	background: url(../img/icon_trash.gif) no-repeat;
+	font-size: 0pt;
+	border: 0;
+	text-decoration: none !important;
+	margin: 0 auto;
+}
+
+div.bottom{
+	background: #f2f2f2 !important;
+	border-top: #d1d1d1 1px solid;
+	padding-top: 3px;
+}
+
+div.empty-roadmap{
+	width: 400px;
+	height: 250px;
+	background: url(../img/empty-roadmap.png) no-repeat;
+	margin: 0 auto;
+}
+
+a.roadmap-add{
+	padding: 7px 20px;
+	margin: 0 auto;
+	color: #FFF;
+
+	background: #757575;
+	display: block;
+	-webkit-border-radius: 12px;
+	-moz-border-radius: 12px;
+	border-radius: 12px;
+	text-decoration: none;
+	width: 170px;
+	text-align: center;
+}
+
+a.roadmap-add:hover{
+		background: #498B18;
 }

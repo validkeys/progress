@@ -115,15 +115,35 @@ class RoadmapsController extends AppController {
 	}
 
 	function add() {
+		$status = 'failure';
+		$notes 	= 'failure';
+		
+		
 		if (!empty($this->data)) {
 			$this->Roadmap->create();
 			if ($this->Roadmap->save($this->data)) {
-				$this->Session->setFlash(__('The roadmap has been saved', true));
-				$this->redirect(array('action' => 'index'));
+				if($this->RequestHandler->accepts('json')){
+					$status = 'success';
+					$this->Roadmap->recursive = -1;
+					$notes = $this->Roadmap->read(null, $this->Roadmap->getLastInsertId());
+				}else{
+					if($this->RequestHandler->accepts('json')){
+						$notes = $this->Roadmap->invalidFields();
+					}else{
+						$this->Session->setFlash(__('The roadmap has been saved', true));
+						$this->redirect(array('action' => 'index'));											
+					}
+				}
 			} else {
-				$this->Session->setFlash(__('The roadmap could not be saved. Please, try again.', true));
+				if($this->RequestHandler->accepts('json')){
+					$notes = $this->Roadmap->invalidFields();
+				}else{
+					$this->Session->setFlash(__('The roadmap could not be saved. Please, try again.', true));	
+				}
 			}
 		}
+		
+		$this->set(compact('notes','status'));
 	}
 
 	function edit($id = null) {
@@ -149,11 +169,28 @@ class RoadmapsController extends AppController {
 			$this->Session->setFlash(__('Invalid id for roadmap', true));
 			$this->redirect(array('action'=>'index'));
 		}
+		$this->Roadmap->recursive = -1;
+		$roadmap = $this->Roadmap->read(null, $id);
+		
 		if ($this->Roadmap->delete($id)) {
-			$this->Session->setFlash(__('Roadmap deleted', true));
-			$this->redirect(array('action'=>'index'));
+			if($this->RequestHandler->accepts('json')){
+				$status = 'success';
+				$notes = $roadmap;
+			}else{
+				$this->Session->setFlash(__('Roadmap deleted', true));
+				$this->redirect(array('action'=>'index'));				
+			}
+		}else{
+			$status = 'failure';
+			$notes = 'could not delete';
 		}
-		$this->Session->setFlash(__('Roadmap was not deleted', true));
-		$this->redirect(array('action' => 'index'));
+		
+		$this->set('status', $status);
+		$this->set('notes', $notes);
+		
+		if(!$this->RequestHandler->accepts('json')){
+			$this->Session->setFlash(__('Roadmap was not deleted', true));
+			$this->redirect(array('action' => 'index'));			
+		}
 	}
 }
