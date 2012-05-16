@@ -1,6 +1,7 @@
 <?php echo $javascript->link(array('master','jquery.scrollTo-min'), false) ?>
 <div id="content-container" class="cssgradients">
-	 <h1>Pressly Progress</h1>
+	<div class="logo"></div>
+	 <h1 id="main-heading">FastFwd</h1>
 	<div id="dialog-modal" title="Add A Step" style="display: none">
 		<input type="text" name="data[Step][title]" id="new-step" class="add-new-field" />
 		<a href="#" id="new-step-save" class="save-link">Save</a>

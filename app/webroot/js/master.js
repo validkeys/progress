@@ -432,4 +432,6 @@ $(document).ready(function() {
 	$('a.delete-roadmap').click(delete_roadmap);
 	
 	$('a.magnify').click(magnify);
+	
+	$('h2.edit-title').editable('http://www.google.com');
 });
