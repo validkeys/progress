@@ -85,14 +85,15 @@ function make_milestones_sortable(){
 }
 
 
-function add_steps(el){
-	event.preventDefault();
+function add_steps(evt, el){
+
+	evt.preventDefault();
 
 	$('#dialog-modal').dialog('open');
 	
 	var url = $(el).attr('href');
 	$('#dialog-modal').find('a#new-step-save').unbind('click');
-	$('#dialog-modal').find('a#new-step-save').click(function(){
+	$('#dialog-modal').find('a#new-step-save').click(function(event){
 		event.preventDefault();
 		$.ajax({
 		  type: 'POST',
@@ -117,6 +118,8 @@ function add_steps(el){
 				// console.log('div#milestone-'+data.notes.Step.milestone_id+' a.add-step');
 				
 				update_progress_bar();
+				// console.log(data.notes);
+				// $.scrollTo('#bottom-'+data.notes.Step.milestone_id,{duration: 700});
 				
 				
 			}else{
@@ -132,12 +135,14 @@ function add_steps(el){
 
 function add_milestones(el){
 	$('#dialog-modal-milestone').dialog('open');
-	
+
 	var url = $(el).attr('href');
+
 	$('#dialog-modal-milestone').find('a#new-milestone-save').unbind('click');
-	$('#dialog-modal-milestone').find('a#new-milestone-save').click(function(){
+	$('#dialog-modal-milestone').find('a#new-milestone-save').click(function(event){
 		
 		event.preventDefault();
+		// console.log(url);
 		$.ajax({
 		  type: 'POST',
 		  url: url+'.json',
@@ -160,11 +165,11 @@ function add_milestones(el){
 				var magnifier = $('<a>').addClass('magnify').attr('href','#').attr('rel','milestone-'+data.notes.Milestone.id).text('+');
 				$(magnifier).click(magnify);
 				$(h3).append(magnifier);
-				var bottom 	= $('<div>').addClass('bottom');
+				var bottom 	= $('<div>').addClass('bottom').attr('id','bottom-'+data.notes.Milestone.id);
 				var h3del	= $('<a>').attr('href','milestones/delete/'+data.notes.Milestone.id).addClass('delete-milestone').text('Delete').click(delete_milestone);
 				
-				var link 	= $('<a>').attr('href','steps/add/milestone_id:'+data.notes.Milestone.id+'.json').addClass('add-step').text('+ Add').click(function(){
-					add_steps(link);
+				var link 	= $('<a>').attr('href','steps/add/milestone_id:'+data.notes.Milestone.id+'.json').addClass('add-step').text('+ Add').click(function(event){
+					add_steps(event, link);
 				});
 				
 				
@@ -235,7 +240,7 @@ function make_checkboxes_checkable(el){
 		});
 }
 
-function delete_milestone(){
+function delete_milestone(event){
 
 	event.preventDefault();
 	var url 		= $(this).attr('href');
@@ -263,7 +268,7 @@ function delete_milestone(){
 	});
 }
 
-function delete_step(){
+function delete_step(event){
 
 	event.preventDefault();
 	var url 		= $(this).attr('href');
@@ -285,7 +290,7 @@ function delete_step(){
 }
 
 
-function delete_roadmap(){
+function delete_roadmap(event){
 
 	event.preventDefault();
 	var url = $(this).attr('href');
@@ -305,7 +310,7 @@ function delete_roadmap(){
 	});
 }
 
-function add_roadmap(){
+function add_roadmap(event){
 	
 	event.preventDefault();
 	
@@ -314,7 +319,7 @@ function add_roadmap(){
 	var url = $(this).attr('href');
 	
 	$('#dialog-modal-roadmap').find('a#new-roadmap-save').unbind('click');
-	$('#dialog-modal-roadmap').find('a#new-roadmap-save').click(function(){
+	$('#dialog-modal-roadmap').find('a#new-roadmap-save').click(function(event){
 		event.preventDefault();
 		$.ajax({
 		  type: 'POST',
@@ -328,7 +333,7 @@ function add_roadmap(){
 				var container 	= $('<div>').addClass('roadmap').attr('id','roadmap-'+data.notes.Roadmap.id);
 				var h2			= $('<h2>').text(data.notes.Roadmap.title);
 				var addLink		= $('<a>').attr('href','milestones/add/roadmap_id:'+data.notes.Roadmap.id+'.json').addClass('add-milestone').text('Add Milestone');
-				$(addLink).click(function(){
+				$(addLink).click(function(event){
 					event.preventDefault();
 					add_milestones($(this));
 				});
@@ -357,7 +362,7 @@ function add_roadmap(){
 	});	
 }
 
-function magnify(){
+function magnify(event){
 	// console.log($(this));
 	event.preventDefault();
 	var rel = $(this).attr('rel');
@@ -389,8 +394,8 @@ $(document).ready(function() {
 	// 	Initiate the checkbox post function
 	// make_checkboxes_checkable();
 	
-	$('a.add-step').click(function(){
-		add_steps($(this));
+	$('a.add-step').click(function(event){
+		add_steps(event, $(this));
 	});
 	$('a.add-milestone').click(function(event){
 		event.preventDefault();
@@ -403,14 +408,14 @@ $(document).ready(function() {
 	
 	// Add Modal
 	$( "#dialog-modal").dialog({
-				height: 180,
+				height: 190,
 				width: 500,
 				modal: true,
 				autoOpen: false
 			});
 
 	$( "#dialog-modal-milestone").dialog({
-				height: 180,
+				height: 190,
 				width: 500,
 				modal: true,
 				autoOpen: false
@@ -418,7 +423,7 @@ $(document).ready(function() {
 
 
 	$( "#dialog-modal-roadmap").dialog({
-				height: 180,
+				height: 190,
 				width: 500,
 				modal: true,
 				autoOpen: false

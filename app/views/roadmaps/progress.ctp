@@ -30,7 +30,7 @@
 				<?php echo $html->link('Add Milestone',array(
 					'controller'	=> 'milestones',
 					'action'		=> 'add',
-					'roadmap_id'	=> $roadmap['Roadmap']['id'].'.json'
+					'roadmap_id'	=> $roadmap['Roadmap']['id']
 				),array('class'	=> 'add-milestone')) ?>
 				<?php echo $html->link('Delete',array(
 					'controller'	=> 'roadmaps',
@@ -61,7 +61,7 @@
 						</div>						
 					<?php endforeach ?>
 					
-					<div class="bottom">
+					<div class="bottom" id="bottom-<?php echo $milestone['id'] ?>">
 					<?php echo $html->link('Add', array(
 						'controller'	=> 'steps',
 						'action'		=> 'add',
