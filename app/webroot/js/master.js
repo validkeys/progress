@@ -98,7 +98,7 @@ function add_steps(evt, el){
 		$.ajax({
 		  type: 'POST',
 		  url: url+'.json',
-		  data: 'data[Step][title]='+$('#new-step').val(),
+		  data: {title: $('#new-step').val()},
 		  success: function(data){
 			if(data.status == "success"){
 				$('#dialog-modal').dialog('close');
@@ -146,7 +146,7 @@ function add_milestones(el){
 		$.ajax({
 		  type: 'POST',
 		  url: url+'.json',
-		  data: 'data[Milestone][title]='+$('#new-milestone').val(),
+		  data: {title : $('#new-milestone').val()},
 		  success: function(data){
 			if(data.status == "success"){
 				// console.log(data);
@@ -324,7 +324,7 @@ function add_roadmap(event){
 		$.ajax({
 		  type: 'POST',
 		  url: url+'.json',
-		  data: 'data[Roadmap][title]='+$('#new-roadmap').val(),
+		  data: {title : $('#new-roadmap').val()},
 		  success: function(data){
 			if(data.status == "success"){
 				$('#dialog-modal-roadmap').dialog('close');

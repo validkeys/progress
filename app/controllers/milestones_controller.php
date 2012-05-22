@@ -50,8 +50,10 @@ class MilestonesController extends AppController {
 
 	function add() {
 
-		if (!empty($this->data)) {
-
+		if (!empty($_POST) && isset($_POST['title']) && !empty($_POST['title'])) {
+				
+			$this->data['Milestone']['title'] = $_POST['title'];
+				
 				if(isset($this->passedArgs['roadmap_id'])){
 					$this->data['Milestone']['roadmap_id'] = $this->passedArgs['roadmap_id'];
 				}

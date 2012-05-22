@@ -17,8 +17,11 @@ class StepsController extends AppController {
 	}
 
 	function add() {
-		if (!empty($this->data)) {
 
+		if (!empty($_POST) && isset($_POST['title']) && !empty($_POST['title'])) {
+			
+			$this->data['Step']['title'] = $_POST['title'];
+			
 			if(isset($this->passedArgs['milestone_id'])){
 				$this->data['Step']['milestone_id'] = $this->passedArgs['milestone_id'];
 			}

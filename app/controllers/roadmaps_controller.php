@@ -118,8 +118,11 @@ class RoadmapsController extends AppController {
 		$status = 'failure';
 		$notes 	= 'failure';
 		
-		
-		if (!empty($this->data)) {
+		$this->log($_POST, LOG_DEBUG);
+		if (!empty($_POST) && isset($_POST['title']) && !empty($_POST['title'])) {
+			
+			$this->data['Roadmap']['title'] = $_POST['title'];
+			
 			$this->Roadmap->create();
 			if ($this->Roadmap->save($this->data)) {
 				if($this->RequestHandler->accepts('json')){
