@@ -13,8 +13,7 @@ body{
 	margin: 0px;
 	padding: 0;
 	background-image: -webkit-linear-gradient(#FFF, #F2F2F2);
-	
-	
+	background: -moz-linear-gradient(top,  #fff,  #f2f2f2);
 }
 
 #content-container{

@@ -175,7 +175,7 @@ function add_milestones(el){
 				$(bottom).append(h3del);
 				$(bottom).append($('<div class="clear-bottom" style="clear:both"></div>'));
 				
-				console.log(div);
+				// console.log(div);
 				$('div#roadmap-'+data.notes.Milestone.roadmap_id+' div.milestone');
 				// $(div).css('width',newWidth);
 				$(div).insertBefore('div#roadmap-'+data.notes.Milestone.roadmap_id+' div.clear').fadeIn(1000).delay(100).effect('highlight',{},3000);
@@ -240,7 +240,7 @@ function delete_milestone(){
 	event.preventDefault();
 	var url 		= $(this).attr('href');
 	var el_parent 	= $(this).parent();
-	console.log(el_parent);
+	// console.log(el_parent);
 	
 	$.ajax({
 	  type: 'POST',
@@ -341,7 +341,7 @@ function add_roadmap(){
 				$(container).append(h2);
 				$(container).append(emptyRoadmap);
 				$(container).append(divclear);
-				console.log(container);
+				// console.log(container);
 				$('#content-container').append(container);
 				$.scrollTo('#roadmap-'+data.notes.Roadmap.id,{duration: 700});
 				$('#roadmap-'+data.notes.Roadmap.id + ' div.empty-roadmap').fadeIn(1500);
@@ -358,7 +358,7 @@ function add_roadmap(){
 }
 
 function magnify(){
-	console.log($(this));
+	// console.log($(this));
 	event.preventDefault();
 	var rel = $(this).attr('rel');
 	var bgdiv = $('<div>').addClass('lightboxbg').css('width',$(window).width()).css('height',$(window).height());
