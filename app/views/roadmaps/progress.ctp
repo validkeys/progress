@@ -48,19 +48,21 @@
 					<h3 class="title"><?php echo $milestone['title'] ?>
 						<a href="#" class="magnify" rel="milestone-<?php echo $milestone['id'] ?>">+</a>
 						</h3>
-					
-					<?php foreach ($milestone['Step'] as $step): ?>
-						<div id="step-<?php echo $step['id'] ?>" class="step <?php echo ($step['complete']) ? "complete" : "" ?>">
-							<input class="pressly-check" type="checkbox" name="<?php echo 'step-' . $step['id'] ?>" <?php echo ($step['complete']) ? "checked='checked'" : "" ?>" value="" id="<?php echo "step-" . $step['id'] ?>">
-							<?php echo $html->link('Del',array(
-								'controller'		=> 'steps',
-								'action'			=> 'delete',
-								$step['id']
-							),array('class'	=> 'step-delete')) ?>
-							<label for="<?php echo "step-" . $step['id'] ?>"><?php echo $step['title'] ?></label>
-						</div>						
-					<?php endforeach ?>
-					
+					<?php if(!empty($milestone['Step'])){ ?>
+						<?php foreach ($milestone['Step'] as $step): ?>
+							<div id="step-<?php echo $step['id'] ?>" class="step <?php echo ($step['complete']) ? "complete" : "" ?>">
+								<input class="pressly-check" type="checkbox" name="<?php echo 'step-' . $step['id'] ?>" <?php echo ($step['complete']) ? "checked='checked'" : "" ?>" value="" id="<?php echo "step-" . $step['id'] ?>">
+								<?php echo $html->link('Del',array(
+									'controller'		=> 'steps',
+									'action'			=> 'delete',
+									$step['id']
+								),array('class'	=> 'step-delete')) ?>
+								<label for="<?php echo "step-" . $step['id'] ?>"><?php echo $step['title'] ?></label>
+							</div>						
+						<?php endforeach ?>
+					<?php }else{ ?>
+						<div class="emptyMilestone">Beer me some steps</div>
+					<?php } ?>	
 					<div class="bottom" id="bottom-<?php echo $milestone['id'] ?>">
 					<?php echo $html->link('Add', array(
 						'controller'	=> 'steps',

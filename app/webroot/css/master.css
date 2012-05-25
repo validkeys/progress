@@ -301,3 +301,12 @@ img#beta-logo{
 	position: absolute;
 	right: 40px;
 }
+
+div.emptyMilestone{
+	color: #d1d1d1;
+	font-size: 1em;
+	text-align: center;
+	padding: 15px 0;
+/*	border: #000 1px solid;*/
+	margin-top: -15px;
+}

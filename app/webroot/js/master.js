@@ -114,6 +114,12 @@ function add_steps(evt, el){
 				$(div).append(input);
 				$(div).append(del);
 				$(div).append(label);
+				
+				// Clear empty milestone div if exists
+				if($('div#milestone-'+data.notes.Step.milestone_id+' div.emptyMilestone')){
+					$('div#milestone-'+data.notes.Step.milestone_id+' div.emptyMilestone').fadeOut(100);
+				}
+				
 				$(div).insertBefore('div#milestone-'+data.notes.Step.milestone_id+' div.bottom').delay(500).slideDown(300).delay(100).effect('highlight',{},3000);
 				// console.log('div#milestone-'+data.notes.Step.milestone_id+' a.add-step');
 				
@@ -165,8 +171,9 @@ function add_milestones(el){
 				var magnifier = $('<a>').addClass('magnify').attr('href','#').attr('rel','milestone-'+data.notes.Milestone.id).text('+');
 				$(magnifier).click(magnify);
 				$(h3).append(magnifier);
-				var bottom 	= $('<div>').addClass('bottom').attr('id','bottom-'+data.notes.Milestone.id);
-				var h3del	= $('<a>').attr('href','milestones/delete/'+data.notes.Milestone.id).addClass('delete-milestone').text('Delete').click(delete_milestone);
+				var emptyDiv 	= $('<div>').addClass('emptyMilestone').text('Beer me some steps');
+				var bottom 		= $('<div>').addClass('bottom').attr('id','bottom-'+data.notes.Milestone.id);
+				var h3del		= $('<a>').attr('href','milestones/delete/'+data.notes.Milestone.id).addClass('delete-milestone').text('Delete').click(delete_milestone);
 				
 				var link 	= $('<a>').attr('href','steps/add/milestone_id:'+data.notes.Milestone.id+'.json').addClass('add-step').text('+ Add').click(function(event){
 					add_steps(event, link);
@@ -175,6 +182,7 @@ function add_milestones(el){
 				
 				$(div).append(prog);
 				$(div).append(h3);
+				$(div).append(emptyDiv);
 				$(div).append(bottom);
 				$(bottom).append(link);
 				$(bottom).append(h3del);
@@ -280,6 +288,15 @@ function delete_step(event){
 	  success: function(data){
 		if(data.status == 'success'){
 			$('div#step-'+data.notes.Step.id).slideUp(1000,function(){
+
+				var parent = $('div#step-'+data.notes.Step.id).parent();
+				if($(parent).find('div.step').length > 1){
+					console.log('still steps');
+				}else{
+					var emptyDiv = $('<div>').addClass('emptyMilestone').text('Beer me some steps');
+					$(emptyDiv).insertBefore($('div#milestone-'+data.notes.Step.milestone_id+ ' div.bottom'));
+				}
+				
 				$(this).remove();
 			});
 			
@@ -337,18 +354,20 @@ function add_roadmap(event){
 					event.preventDefault();
 					add_milestones($(this));
 				});
-				var delLink		= $('<a>').attr('href','roadmaps/delete/'+data.notes.Roadmap.id).addClass('delete-roadmap').text('Delete');
+				var delLink			= $('<a>').attr('href','roadmaps/delete/'+data.notes.Roadmap.id).addClass('delete-roadmap').text('Delete');
 				$(delLink).click(delete_roadmap);
-				var emptyRoadmap = $('<div>').addClass('empty-roadmap').css('display','none');
-				var divclear = $('<div>').addClass('clear').css('clear','both');
+				var emptyRoadmap 	= $('<div>').addClass('empty-roadmap').css('display','none');
+				var divclear 		= $('<div>').addClass('clear').css('clear','both');
 				$(h2).append(addLink);
 				$(h2).append(delLink);
 				$(container).append(h2);
 				$(container).append(emptyRoadmap);
 				$(container).append(divclear);
+
 				// console.log(container);
 				$('#content-container').append(container);
-				$.scrollTo('#roadmap-'+data.notes.Roadmap.id,{duration: 700});
+				// $.scrollTo('#roadmap-'+data.notes.Roadmap.id + ' div.scroller',{duration: 700});
+				$('html, body').animate({scrollTop:$(document).height()},700);
 				$('#roadmap-'+data.notes.Roadmap.id + ' div.empty-roadmap').fadeIn(1500);
 				
 			}else{
