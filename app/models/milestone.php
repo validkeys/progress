@@ -11,18 +11,19 @@ class Milestone extends AppModel {
 			'foreignKey' => 'roadmap_id',
 			'conditions' => '',
 			'fields' => '',
-			'order' => ''
+			'order' => '',
+			'counterCache'	=> true
 		)
 	);
 
 	var $hasMany = array(
-		'Step' => array(
-			'className' => 'Step',
+		'UserStory' => array(
+			'className' => 'UserStory',
 			'foreignKey' => 'milestone_id',
 			'dependent' => true,
 			'conditions' => '',
 			'fields' => '',
-			'order' => 'Step.sort_order ASC',
+			'order' => 'UserStory.sort_order ASC',
 			'limit' => '',
 			'offset' => '',
 			'exclusive' => '',

@@ -1,53 +1,55 @@
 <?php
-class StepsController extends AppController {
+class UserStoriesController extends AppController {
 
-	var $name = 'Steps';
+	var $name = 'UserStories';
 
 	function index() {
-		$this->Step->recursive = 0;
-		$this->set('steps', $this->paginate());
+		$this->UserStory->recursive = 0;
+		$this->set('user_stories', $this->paginate());
 	}
 
 	function view($id = null) {
 		if (!$id) {
-			$this->Session->setFlash(__('Invalid step', true));
+			$this->Session->setFlash(__('Invalid user story', true));
 			$this->redirect(array('action' => 'index'));
 		}
-		$this->set('step', $this->Step->read(null, $id));
+		$this->set('user_story', $this->UserStory->read(null, $id));
 	}
 
 	function add() {
 
 		if (!empty($_POST) && isset($_POST['title']) && !empty($_POST['title'])) {
 			
-			$this->data['Step']['title'] = $_POST['title'];
+			$this->data['UserStory']['title'] = $_POST['title'];
 			
 			if(isset($this->passedArgs['milestone_id'])){
-				$this->data['Step']['milestone_id'] = $this->passedArgs['milestone_id'];
+				$this->data['UserStory']['milestone_id'] = $this->passedArgs['milestone_id'];
 			}
 			
 			
-			$this->Step->create();
-			if ($this->Step->save($this->data)) {
+			$this->UserStory->create();
+			if ($this->UserStory->save($this->data)) {
 				if($this->RequestHandler->accepts('json')){
 					$status = 'success';
-					$this->Step->recursive = -1;
-					$notes = $this->Step->read(null, $this->Step->getLastInsertId());
+					$this->UserStory->contain = array('Task');
+					$notes = $this->UserStory->read(null, $this->UserStory->getLastInsertId());
+					$notes['UserStory']['Task'] = $notes['Task'];
+					$this->log($notes, LOG_DEBUG);
 				}else{
-					$this->Session->setFlash(__('The step has been saved', true));
+					$this->Session->setFlash(__('The user story has been saved', true));
 					$this->redirect(array('action' => 'index'));					
 				}
 			} else {
 				if($this->RequestHandler->accepts('json')){
 					$status = 'failure';
-					$notes = $this->Step->invalidFields();
+					$notes = $this->UserStory->invalidFields();
 				}else{
-					$this->Session->setFlash(__('The step could not be saved. Please, try again.', true));	
+					$this->Session->setFlash(__('The user story could not be saved. Please, try again.', true));	
 				}
 				
 			}
 		}
-		$milestones = $this->Step->Milestone->find('list');
+		$milestones = $this->UserStory->Milestone->find('list');
 		$this->set(compact('milestones'));
 		
 		$this->set('status', 	$status);
@@ -56,21 +58,21 @@ class StepsController extends AppController {
 
 	function edit($id = null) {
 		if (!$id && empty($this->data)) {
-			$this->Session->setFlash(__('Invalid step', true));
+			$this->Session->setFlash(__('Invalid user story', true));
 			$this->redirect(array('action' => 'index'));
 		}
 		if (!empty($this->data)) {
-			if ($this->Step->save($this->data)) {
-				$this->Session->setFlash(__('The step has been saved', true));
+			if ($this->UserStory->save($this->data)) {
+				$this->Session->setFlash(__('The user story has been saved', true));
 				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The step could not be saved. Please, try again.', true));
+				$this->Session->setFlash(__('The user story could not be saved. Please, try again.', true));
 			}
 		}
 		if (empty($this->data)) {
-			$this->data = $this->Step->read(null, $id);
+			$this->data = $this->UserStory->read(null, $id);
 		}
-		$milestones = $this->Step->Milestone->find('list');
+		$milestones = $this->UserStory->Milestone->find('list');
 		$this->set(compact('milestones'));
 	}
 
@@ -80,20 +82,20 @@ class StepsController extends AppController {
 				$status = 'failure';
 				$notes = 'no id sent';
 			}else{
-				$this->Session->setFlash(__('Invalid id for step', true));
+				$this->Session->setFlash(__('Invalid id for user story', true));
 				$this->redirect(array('action'=>'index'));
 				
 			}
 		}
-		$this->Step->recursive = -1;
-		$step = $this->Step->read(null, $id);
+		$this->UserStory->recursive = -1;
+		$user_story = $this->UserStory->read(null, $id);
 		
-		if ($this->Step->delete($id)) {
+		if ($this->UserStory->delete($id)) {
 			if($this->RequestHandler->accepts('json')){
 				$status = 'success';
-				$notes = $step;
+				$notes = $user_story;
 			}else{
-				$this->Session->setFlash(__('Step deleted', true));
+				$this->Session->setFlash(__('user story deleted', true));
 				$this->redirect(array('action'=>'index'));				
 			}
 		}else{
@@ -105,7 +107,7 @@ class StepsController extends AppController {
 		$this->set('notes', $notes);
 		
 		if(!$this->RequestHandler->accepts('json')){
-			$this->Session->setFlash(__('Step was not deleted', true));
+			$this->Session->setFlash(__('user story was not deleted', true));
 			$this->redirect(array('action' => 'index'));			
 		}
 	}
@@ -116,10 +118,10 @@ class StepsController extends AppController {
 		
 		if($this->RequestHandler->accepts('json')){
 			if(!empty($_POST) && isset($_POST['id'])){
-				$this->Step->id = $_POST['id'];
-				$current = $this->Step->field('complete');
+				$this->UserStory->id = $_POST['id'];
+				$current = $this->UserStory->field('complete');
 				$new = abs($current - 1);
-				if($this->Step->saveField('complete', $new)){
+				if($this->UserStory->saveField('complete', $new)){
 					$status = 'success';
 					$action = ($current == 1) ? 'uncomplete' : 'complete';
 				}
@@ -136,12 +138,12 @@ class StepsController extends AppController {
 	}
 	
 	function sort(){
-		$this->log($_POST['step'], LOG_DEBUG);
+		// $this->log($_POST, LOG_DEBUG);
 		$status = 'failure';
-		if(!empty($_POST) && isset($_POST['step'])){
+		if(!empty($_POST) && isset($_POST['user_story'])){
 			$order = 1;
 			$data = array();
-			foreach ($_POST['step'] as $key => $id) {
+			foreach ($_POST['user_story'] as $key => $id) {
 					$data[] = array(
 						'id'			=> $id,
 						'sort_order'	=> $order
@@ -149,7 +151,7 @@ class StepsController extends AppController {
 				$order++;
 			}
 			
-			if($this->Step->saveAll($data)){
+			if($this->UserStory->saveAll($data)){
 				$status = 'success';
 			}
 		}else{

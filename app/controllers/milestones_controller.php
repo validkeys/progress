@@ -15,44 +15,15 @@ class MilestonesController extends AppController {
 		}
 		$this->set('milestone', $this->Milestone->read(null, $id));
 	}
-	// if (!empty($this->data)) {
-	// 
-	// 	if(isset($this->passedArgs['milestone_id'])){
-	// 		$this->data['Step']['milestone_id'] = $this->passedArgs['milestone_id'];
-	// 	}
-	// 	
-	// 	
-	// 	$this->Step->create();
-	// 	if ($this->Step->save($this->data)) {
-	// 		if($this->RequestHandler->accepts('json')){
-	// 			$status = 'success';
-	// 			$this->Step->recursive = -1;
-	// 			$notes = $this->Step->read(null, $this->Step->getLastInsertId());
-	// 		}else{
-	// 			$this->Session->setFlash(__('The step has been saved', true));
-	// 			$this->redirect(array('action' => 'index'));					
-	// 		}
-	// 	} else {
-	// 		if($this->RequestHandler->accepts('json')){
-	// 			$status = 'failure';
-	// 			$notes = $this->Step->invalidFields();
-	// 		}else{
-	// 			$this->Session->setFlash(__('The step could not be saved. Please, try again.', true));	
-	// 		}
-	// 		
-	// 	}
-	// }
-	// $milestones = $this->Step->Milestone->find('list');
-	// $this->set(compact('milestones'));
-	// 
-	// $this->set('status', 	$status);
-	// $this->set('notes', 	$notes);
 
 	function add() {
-
+		$status = 'success';
+		$notes 	= 'success';
 		if (!empty($_POST) && isset($_POST['title']) && !empty($_POST['title'])) {
 				
 			$this->data['Milestone']['title'] = $_POST['title'];
+			$this->data['Milestone']['due_date'] = $_POST['due_date'];
+			$this->log($this->data, LOG_DEBUG);
 				
 				if(isset($this->passedArgs['roadmap_id'])){
 					$this->data['Milestone']['roadmap_id'] = $this->passedArgs['roadmap_id'];
@@ -137,7 +108,7 @@ class MilestonesController extends AppController {
 	}
 	
 	function sort(){
-		// $this->log($_POST['milestone'], LOG_DEBUG); die();
+		$this->log($_POST['milestone'], LOG_DEBUG);
 		$status = 'failure';
 		if(!empty($_POST) && isset($_POST['milestone'])){
 			$order = 1;
@@ -160,7 +131,7 @@ class MilestonesController extends AppController {
 		$data = array(
 			'status'	=> $status
 		);
-		
+		$this->log($data, LOG_DEBUG);
 		$this->set('data', $data);
 		
 	}

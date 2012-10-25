@@ -27,7 +27,7 @@
  * to use (in this case, /app/views/pages/home.ctp)...
  */
 	Router::parseExtensions();
-	Router::connect('/', array('controller' => 'roadmaps', 'action' => 'progress'));
+	Router::connect('/', array('controller' => 'roadmaps', 'action' => 'index'));
 /**
  * ...and connect the rest of 'Pages' controller's urls.
  */

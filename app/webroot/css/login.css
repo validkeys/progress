@@ -1,0 +1,38 @@
+body{
+	background-image: url(../img/painting2.jpg);
+	background-repeat: no-repeat;
+	background-position: top center;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+
+div.logo{
+	background: url(../img/p-logo.png) center center no-repeat;
+	width: 552px;
+	height: 120px;
+	margin: 150px auto 0 auto;
+}
+
+div.login-container{
+	background: rgba(255,255,255,.6);
+	padding: 30px;
+	width: 220px;
+	margin: 100px auto 0 auto;
+	border:solid 0px #f2f2f2;
+	-moz-border-radius: 15px;
+	-webkit-border-radius: 15px;
+	border-radius: 15px;	
+}
+
+div.login-container input[type=password]{
+	float: left;
+	width: 141px;
+}
+
+div.login-container label{
+	text-transform: uppercase;
+	font-weight: bold;
+	color: #000;
+}

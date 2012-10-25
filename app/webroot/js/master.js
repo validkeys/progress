@@ -24,10 +24,6 @@ function update_progress_bar(){
 }
 
 function flash(){
-	// <div class="flash-message">
-	// 	<h1>FUCKING RIGHTS!</h1>
-	// </div>
-	
 	var messages = ["Shipped, Bitch!","Fucking Rights!","You guys are amazing!","Holy Shit! Amazing work guys","Unbelievable!","FINGER CLAP!!!","I JUST !@#$'d in my @#$$","AMAZING!!!!","You are reaching god-like excellence","Backrubs on Jeff","We're Really Doing It, Harry"];
 	msg = messages[Math.floor(Math.random()*messages.length)];
 
@@ -40,7 +36,7 @@ function flash(){
 	
 }
 
-function make_steps_sortable(){
+function make_user_stories_sortable(){
 	$('div.milestone').sortable({
 		items: 'div.step',
 		axis: 'y',
@@ -49,7 +45,7 @@ function make_steps_sortable(){
 		update: function(event, ui){
 			$.ajax({
 			  type: 'POST',
-			  url: 'steps/sort.json',
+			  url: 'user_stories/sort.json',
 			  data: $(this).sortable('serialize'),
 			  success: function(data){
 				if(data.response.status == 'failure'){
@@ -71,7 +67,7 @@ function make_milestones_sortable(){
 		update: function(event, ui){
 			$.ajax({
 			  type: 'POST',
-			  url: 'milestones/sort.json',
+			  url: $('.roadmap').attr('data-webroot')+'milestones/sort.json',
 			  data: $(this).sortable('serialize'),
 			  success: function(data){
 				if(data.response.status == 'failure'){
@@ -85,7 +81,7 @@ function make_milestones_sortable(){
 }
 
 
-function add_steps(evt, el){
+function add_user_stories(evt, el){
 
 	evt.preventDefault();
 
@@ -105,22 +101,20 @@ function add_steps(evt, el){
 				
 				$('input#new-step').val("");
 				
-				var div 	= $("<div>").attr('id', 'step-'+data.notes.Step.id).addClass('step').css('display','none');
-				var input 	= $('<input type="checkbox">').addClass('pressly-check').attr('name','step-'+data.notes.Step.id).attr('id','step-'+data.notes.Step.id);
-				$(input).change(make_checkboxes_checkable);				
-				var del		= $('<a>').attr('href','steps/delete/'+data.notes.Step.id).addClass('step-delete');
-				del.click(delete_step);
-				var label 	= $('<label for="step-'+data.notes.Step.id+'">').text(data.notes.Step.title);
-				$(div).append(input);
-				$(div).append(del);
-				$(div).append(label);
 				
 				// Clear empty milestone div if exists
-				if($('div#milestone-'+data.notes.Step.milestone_id+' div.emptyMilestone')){
-					$('div#milestone-'+data.notes.Step.milestone_id+' div.emptyMilestone').fadeOut(100);
+				if($('div#milestone-'+data.notes.UserStory.milestone_id+' div.emptyMilestone')){
+					$('div#milestone-'+data.notes.UserStory.milestone_id+' div.emptyMilestone').fadeOut(100);
 				}
+				var new_data = data.form;
+
 				
-				$(div).insertBefore('div#milestone-'+data.notes.Step.milestone_id+' div.bottom').delay(500).slideDown(300).delay(100).effect('highlight',{},3000);
+
+				$(new_data).insertBefore('div#milestone-'+data.notes.UserStory.milestone_id+' div.bottom').delay(500).slideDown(300).delay(100).effect('highlight',{},3000);
+				$("div#user_story-"+data.notes.UserStory.id).find('a.step-delete').click(delete_user_story);
+				$("div#user_story-"+data.notes.UserStory.id).find('a.task-open').click(toggle_task_listing);
+				$("div#user_story-"+data.notes.UserStory.id).find('a.add-task-link').click(toggle_add_task_form);
+				$("div#user_story-"+data.notes.UserStory.id).find('.add-task-form form').submit(submit_task_form);
 				// console.log('div#milestone-'+data.notes.Step.milestone_id+' a.add-step');
 				
 				update_progress_bar();
@@ -152,7 +146,7 @@ function add_milestones(el){
 		$.ajax({
 		  type: 'POST',
 		  url: url+'.json',
-		  data: {title : $('#new-milestone').val()},
+		  data: {title : $('#new-milestone').val(),due_date : $('#new-milestone-date').val()},
 		  success: function(data){
 			if(data.status == "success"){
 				// console.log(data);
@@ -171,12 +165,12 @@ function add_milestones(el){
 				var magnifier = $('<a>').addClass('magnify').attr('href','#').attr('rel','milestone-'+data.notes.Milestone.id).text('+');
 				$(magnifier).click(magnify);
 				$(h3).append(magnifier);
-				var emptyDiv 	= $('<div>').addClass('emptyMilestone').text('Beer me some steps');
+				var emptyDiv 	= $('<div>').addClass('emptyMilestone').text('Beer me some stories');
 				var bottom 		= $('<div>').addClass('bottom').attr('id','bottom-'+data.notes.Milestone.id);
-				var h3del		= $('<a>').attr('href','milestones/delete/'+data.notes.Milestone.id).addClass('delete-milestone').text('Delete').click(delete_milestone);
+				var h3del		= $('<a>').attr('href','milestones/delete/'+data.notes.Milestone.id).addClass('btn btn-danger delete-milestone').text('Delete').click(delete_milestone);
 				
-				var link 	= $('<a>').attr('href','steps/add/milestone_id:'+data.notes.Milestone.id+'.json').addClass('add-step').text('+ Add').click(function(event){
-					add_steps(event, link);
+				var link 	= $('<a>').attr('href','user_stories/add/milestone_id:'+data.notes.Milestone.id+'.json').addClass('btn add-step').text('+ Add').click(function(event){
+					add_user_stories(event, link);
 				});
 				
 				
@@ -192,12 +186,12 @@ function add_milestones(el){
 				$('div#roadmap-'+data.notes.Milestone.roadmap_id+' div.milestone');
 				// $(div).css('width',newWidth);
 				$(div).insertBefore('div#roadmap-'+data.notes.Milestone.roadmap_id+' div.clear').fadeIn(1000).delay(100).effect('highlight',{},3000);
-				set_milestone_width(data.notes.Milestone.roadmap_id);
+				// set_milestone_width(data.notes.Milestone.roadmap_id);
 				// $('div#roadmap-'+data.notes.Milestone.roadmap_id).append(div);
 
 				update_progress_bar();
 				make_milestones_sortable();
-				make_steps_sortable();
+				make_user_stories_sortable();
 				$.scrollTo('#milestone-'+data.notes.Milestone.id+' div.bottom',{duration: 700});
 				
 			}else{
@@ -211,24 +205,25 @@ function add_milestones(el){
 	});
 }
 
-function set_milestone_width(roadmap_id){
+// function set_milestone_width(roadmap_id){
 	
-	var current 	= (((100 / $('div#roadmap-'+roadmap_id+' div.milestone').length) - 2) / 100) * 830;
-	current = current + "px";
-	$('div#roadmap-'+roadmap_id+' div.milestone').css('width',current);
-}
+// 	var current 	= (((100 / $('div#roadmap-'+roadmap_id+' div.milestone').length) - 2) / 100) * 830;
+// 	current = current + "px";
+// 	$('div#roadmap-'+roadmap_id+' div.milestone').css('width',current);
+// }
 
 
-function make_checkboxes_checkable(el){
+function make_user_story_checkboxes_checkable(el){
 
 		var checkedbox = $(this);
 		var id = $(checkedbox).attr('name').split('-')[1];
-		
+		console.log(checkedbox);
 		$.ajax({
 		  type: 'POST',
-		  url: 'steps/complete.json',
+		  url: $('.roadmap').attr('data-story-complete-url'),
 		  data: 'id='+id,
 		  success: function(data){
+		  	console.log(data);
 			if(data.response.status == 'success'){
 				update_progress_bar();
 				if(data.response.action == 'uncomplete'){
@@ -248,6 +243,23 @@ function make_checkboxes_checkable(el){
 		});
 }
 
+function toggle_task_completeness(evt){
+		evt.preventDefault();
+		var form = $(this).parent();
+		$.ajax({
+		  type: 'POST',
+		  url: $('.roadmap').attr('data-task-complete-url'),
+		  data: $(form).serialize(),
+		  success: function(data){
+			if(data.response.status != 'success'){
+				alert('Problem saving that');
+			}
+		},
+		  dataType: 'json'
+		});
+}
+
+
 function delete_milestone(event){
 
 	event.preventDefault();
@@ -266,7 +278,7 @@ function delete_milestone(event){
 					var emptyRoadmap = $('<div>').addClass('empty-roadmap');
 					$(emptyRoadmap).insertBefore('div#roadmap-'+data.notes.Milestone.roadmap_id+' div.clear');
 				}
-				set_milestone_width(data.notes.Milestone.roadmap_id);
+				// set_milestone_width(data.notes.Milestone.roadmap_id);
 			});
 		}else{
 			alert('There was a problem deleting that. Try refreshing the page and doing it again. Sorry, I kind of suck');
@@ -276,7 +288,7 @@ function delete_milestone(event){
 	});
 }
 
-function delete_step(event){
+function delete_user_story(event){
 
 	event.preventDefault();
 	var url 		= $(this).attr('href');
@@ -287,14 +299,14 @@ function delete_step(event){
 	  url: url+'.json',
 	  success: function(data){
 		if(data.status == 'success'){
-			$('div#step-'+data.notes.Step.id).slideUp(1000,function(){
+			$('div#user_story-'+data.notes.UserStory.id).slideUp(1000,function(){
 
-				var parent = $('div#step-'+data.notes.Step.id).parent();
+				var parent = $('div#user_story-'+data.notes.UserStory.id).parent();
 				if($(parent).find('div.step').length > 1){
 					console.log('still steps');
 				}else{
-					var emptyDiv = $('<div>').addClass('emptyMilestone').text('Beer me some steps');
-					$(emptyDiv).insertBefore($('div#milestone-'+data.notes.Step.milestone_id+ ' div.bottom'));
+					var emptyDiv = $('<div>').addClass('emptyMilestone').text('Beer me some stories');
+					$(emptyDiv).insertBefore($('div#milestone-'+data.notes.UserStory.milestone_id+ ' div.bottom'));
 				}
 				
 				$(this).remove();
@@ -399,6 +411,35 @@ function magnify(event){
 	$('div#'+rel).addClass('lightbox');
 }
 
+function submit_task_form(evt){
+	var el = $(this);
+	evt.preventDefault(evt);
+	$.ajax({
+	  type: 'POST',
+	  url: $(this).attr('action')+'.json',
+	  data: $(this).serialize(),
+	  success: function(data){
+		if(data.status == "success"){
+			$(el).parent().parent().parent().find('.tasks-inner').append(data.form);
+			$(el).find('input.task-title-element').val('');
+		}else{
+			alert("For some reason, that steo could not be saved" + data.notes);
+		}
+	},
+	  dataType: 'json'
+	});
+}
+
+function toggle_task_listing(evt){
+		evt.preventDefault();
+		$(this).parent().parent().find('.tasks-wrapper').toggle();
+}
+
+function toggle_add_task_form(evt){
+	evt.preventDefault();
+	$(this).parent().find('.add-task-form').toggle();
+}
+
 
 $(document).ready(function() {
 	
@@ -408,13 +449,13 @@ $(document).ready(function() {
 	update_progress_bar();
 	
 	// Add in the sortable option
-	make_steps_sortable();
+	make_user_stories_sortable();
 	
 	// 	Initiate the checkbox post function
 	// make_checkboxes_checkable();
 	
 	$('a.add-step').click(function(event){
-		add_steps(event, $(this));
+		add_user_stories(event, $(this));
 	});
 	$('a.add-milestone').click(function(event){
 		event.preventDefault();
@@ -423,7 +464,8 @@ $(document).ready(function() {
 	
 	make_milestones_sortable();
 	
-	$('input[type=checkbox]').change(make_checkboxes_checkable);
+	$('input.user-story-check').change(make_user_story_checkboxes_checkable);
+	$('input.task-check').change(toggle_task_completeness);
 	
 	// Add Modal
 	$( "#dialog-modal").dialog({
@@ -451,12 +493,17 @@ $(document).ready(function() {
 			
 	$('a.delete-milestone').click(delete_milestone);
 	
-	$('a.step-delete').click(delete_step);
+	$('a.step-delete').click(delete_user_story);
 	
-	$('a.roadmap-add').click(add_roadmap);
+	$('a#roadmap-add').click(add_roadmap);
 	
 	$('a.delete-roadmap').click(delete_roadmap);
 	
 	$('a.magnify').click(magnify);
 	
+	$('a.task-open').click(toggle_task_listing);
+
+	$('a.add-task-link').click(toggle_add_task_form);
+
+	$('.add-task-form form').submit(submit_task_form);
 });

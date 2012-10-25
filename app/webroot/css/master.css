@@ -1,6 +1,24 @@
+@font-face {
+    font-family: 'LightCondensed';
+    src: url('../fonts/LightCondensed/FUTURALC.TTF') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Book';
+    src: url('../fonts/Book/FUTURAN.TTF') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Bold';
+    src: url('../fonts/Bold/FUTURAB.TTF') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
 html{
-	background: #F2F2F2;
-	font-family: "Helvetica Neue",Helvetica,Arial;
+	/*background: #F2F2F2;*/
+	font-family: "Book";
 	height: 100%;
 	width: 100%;
 	margin: 0;
@@ -14,13 +32,22 @@ body{
 	padding: 0;
 	background-image: -webkit-linear-gradient(#FFF, #F2F2F2);
 	background: -moz-linear-gradient(top,  #fff,  #f2f2f2);
+	background-attachment:fixed;
 }
-
+.clear{clear:both;}
+div#navbar{
+	width: 100%;
+	position: fixed;
+}
+#main-heading{
+	font-family: 'Book';
+	color: #000;
+}
 #content-container{
-/*	background-image: linear-gradient(top, #555, #CC0000);*/
+	background-image: linear-gradient(top, #555, #CC0000);
 /*	border: #d1d1d1 8px solid;*/
-	width: 950px;
-	margin: 0 auto;
+	/*width: 950px;*/
+	/*margin: 0 auto;*/
 	padding: 10px;
 /*	height: 100%;*/
 	position: relative;
@@ -39,40 +66,59 @@ h1{
 
 div.roadmap{
 /*	border: #f2f2f2 1px solid;*/
-	width: 900px;
-	margin: 0 auto;
-	padding: 5px;
-	height: 100%;
+	/*overflow: auto;*/
+	margin-top: 150px;
+	margin-right: -999em;
+	/*padding: 5px 5px 5px 15%;*/
+	min-height: 900px;
 }
 div.roadmap h2{text-align: center;}
-
-div.step label{
-	margin-left: 15px;
-	font-size: 13px;
-	font-weight: 200;
-}
-
-div.roadmap div.milestone{
-	float: left;
-	border: #d1d1d1 1px solid;
-	padding: 3px;
-	height: 100%;
-	background: #FFF;
-	margin: 5px;
-	-webkit-box-shadow: #575757 1px 1px 1px;
-    -moz-box-shadow: #575757 1px 1px 1px;
-    box-shadow: #575757 1px 1px 1px;
-/*	border: 1px solid #141414;*/
-		-webkit-border-radius: 0 0 12px 12px;
-		-moz-border-radius: 0 0 12px 12px;
-		border-radius: 0 0 0 12px;
-}
-
 div.roadmap div.milestone div.step{
 	padding: 5px 2px;
 	border-bottom: #feebfa 1px solid;
 	margin: 2px 0;
+	clear: both;
 }
+
+div.step .task-link{
+	width: 75px;
+	float: right;
+}
+
+div.step input[type=checkbox]{
+	float: left;
+}
+div.step label{
+	margin-left: 15px;
+	font-size: 13px;
+	font-weight: 200;
+	float: left;
+}
+
+div.roadmap div.milestone div.step div.tasks-wrapper{
+	padding: 10px;
+	border-top: #d1d1d1 1px solid;
+	width: 90%;
+	margin: 10px auto 0 auto;
+	clear: both;
+}
+div.roadmap div.milestone{
+	float: left;
+	border: #d1d1d1 1px solid;
+	padding: 3px;
+	min-height: 500px;
+	background: #FFF;
+	margin: 5px;
+	width: 500px;
+	-webkit-box-shadow: #575757 1px 1px 1px;
+    -moz-box-shadow: #575757 1px 1px 1px;
+    box-shadow: #575757 1px 1px 1px;
+/*	border: 1px solid #141414;*/
+	-webkit-border-radius: 0 0 12px 12px;
+	-moz-border-radius: 0 0 12px 12px;
+	border-radius: 0 0 0 12px;
+}
+
 
 h3.title{
 	padding: 5px 0 0 0!important;
@@ -85,6 +131,7 @@ h3.title{
 	border-bottom: #d1d1d1 1px dotted;
 	font-size: 16pt;
 	margin-top: 2px !important;
+	font-family: 'Bold';
 }
 
 div.step.complete{
@@ -95,7 +142,7 @@ div.step.complete{
 /*	border: #A9CF54 1px solid !important;*/
 }
 
-div.step.complete label{text-decoration: line-through;}
+/*div.step.complete label{text-decoration: line-through;}*/
 
 div.flash-message{
 	z-index: 9999;
@@ -118,7 +165,7 @@ input.add-new-field{
 	font-size: 30pt !important;
 	width: 450px;
 	padding: 5px;
-	font-family: "Helvetica Neue", Helvetica, Arial !important;
+	/*font-family: "Helvetica Neue", Helvetica, Arial !important;*/
 	font-weight: 100 !important;
 }
 
@@ -128,7 +175,7 @@ a.save-link{
 	width: 120px;
 	background: #eaf9ec;
 	color: #30b53f !important;
-	font-family: "Helvetica Neue", Helvetica, Arial !important;
+	/*font-family: "Helvetica Neue", Helvetica, Arial !important;*/
 	font-size: 18pt;
 	text-decoration: none;
 	font-weight: 100 !important;ign: center;
@@ -143,42 +190,28 @@ a.save-link:hover{
 	background: #ED9C1A;
 }
 
-a.add-milestone{
-	padding: 3px 3px;
-	display: block !important;
-/*	float: right;*/
-	margin: 0 auto;
-/*	position: inli;*/
-	width: 100px;
-	font-size: 12pt;
-	font-weight: 200 !important;
-	text-align: center;
-	text-decoration: none;
-	color: #588F27;
 
+div.roadmap-actions{
+	width: 200px;
+	position: absolute;
+	top: 70px;
+	left: 110px;
+}
+
+
+a.add-step, a.delete-milestone{
+	display: block;
+	float: left;
+	width: 70px;
+}
+
+a.add-step {
+	margin-right: 5px;
 }
 
 a.delete-milestone{
-	display: block;
-	float: right;
-	width: 16px;
-	height: 16px;
-	background: url(../img/icon_trash.gif) no-repeat;
-	font-size: 0pt;
-	border: 0;
-	text-decoration: none !important;
-	margin: 5px 2px 0 0;
-}
-
-a.add-step{
-	display: block !important;
-	float: left;
-	color: green;
-	background: url(../img/add.jpg) !important;
-	height: 25px;
-	width: 25px;
-
-	font-size: 0pt;
+	width: 120px;
+	clear: right;
 }
 
 a.step-delete{
@@ -206,7 +239,7 @@ a.delete-roadmap{
 div.bottom{
 	background: #f2f2f2 !important;
 	border-top: #d1d1d1 1px solid;
-	padding-top: 3px;
+	padding-top: 10px;
 }
 
 div.empty-roadmap{
@@ -216,7 +249,9 @@ div.empty-roadmap{
 	margin: 0 auto;
 }
 
-a.roadmap-add{
+
+
+/*a.roadmap-add{
 	padding: 7px 20px;
 	margin: 0 auto;
 	color: #FFF;
@@ -229,7 +264,7 @@ a.roadmap-add{
 	text-decoration: none;
 	width: 170px;
 	text-align: center;
-}
+}*/
 
 a.roadmap-add:hover{
 		background: #498B18;
@@ -309,4 +344,50 @@ div.emptyMilestone{
 	padding: 15px 0;
 /*	border: #000 1px solid;*/
 	margin-top: -15px;
+}
+div#roadmap-switcher{
+	position: absolute;
+	top: 15px;
+	left: 250px;
+}
+.roadmap-heading{
+	text-align: right;
+	/*margin-top: 150px;*/
+	position: fixed;
+	right: 0;
+	font-family: 'LightCondensed';
+	color: #d1d1d1;
+	border: none;
+}
+a#roadmap-add{
+	float: right;
+	margin-left: 5px;
+}
+
+div.due-date{
+	margin-top: -30px;
+	margin-bottom: 30px;
+	text-align: center;
+	font-family: 'Book';
+	text-transform: uppercase;
+}
+
+div.step div.add-task-form{
+	background: #f2f2f2;
+	padding: 5px;
+}
+
+div.step div.add-task-form input[type=text]{
+	width: 75%;
+	float: left;
+}
+
+div.step div.add-task-form input.btn{
+	float: right;
+	width: 15%;
+	margin-right: 10px;
+}
+.task-check-div{
+	clear: both;
+	width: 100%;
 }
